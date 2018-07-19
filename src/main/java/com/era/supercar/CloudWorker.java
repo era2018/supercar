@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -43,13 +48,28 @@ class CloudWorker implements Runnable
                     System.out.println(percent);
     
                     // Send data to database
-                    // TODO
+                    Properties props = new Properties();
+                    props.put( "User", "ubdb" );
+                    props.put( "Password", "123456" );
+                    System.out.println("connecting");
+                    Connection con = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
+                    System.out.println("connected");
+                    String queryString = "INSERT INTO sensordata (timestamp, percent, absolute) values (0, 0, 0)";
+                    PreparedStatement pstatement = ((Connection) connection).prepareStatement(queryString);
+                    pstatement.executeUpdate();
+           
+                    System.out.println("Insert executed.");
+                    pstatement.close();
+                    con.close();
     
                 }
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
             } catch (IOException e) {
 				e.printStackTrace();
-            }
+            } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
 }
