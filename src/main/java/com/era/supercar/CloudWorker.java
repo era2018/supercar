@@ -8,13 +8,16 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 class CloudWorker implements Runnable
 {
 	public void run() {
             // Connect to cloud server
             String url = "https://api-http.littlebitscloud.cc/v2/devices/243c201f7957/input";
             
-			try {
+            try {
                 URL obj = new URL(url);
                 HttpsURLConnection connection = (HttpsURLConnection) obj.openConnection();
                 connection.setRequestMethod("POST");
@@ -31,7 +34,13 @@ class CloudWorker implements Runnable
                 while((inputLine=in.readLine()) != null)
                 {
                     // Parse JSON
-                    System.out.println(inputLine);
+                    inputLine = inputLine.substring(5);
+                    JsonObject jsonObject = new JsonParser().parse(inputLine).getAsJsonObject();
+
+                    String percent = jsonObject.get("percent").getAsString();
+
+                    //System.out.println(inputLine);
+                    System.out.println(percent);
     
                     // Send data to database
                     // TODO

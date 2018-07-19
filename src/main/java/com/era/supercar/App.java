@@ -16,15 +16,18 @@ public class App
 
         ArrayList<Thread> threads = new ArrayList<Thread>();
 
+        ServerSocket server = new ServerSocket(330);
+
         while(true)
         {
-            ServerSocket server = new ServerSocket(330);
             Socket client = server.accept();
 
             Thread clientWorker = new Thread( new ClientWorker(client) );
             threads.add(clientWorker);
             clientWorker.run();
         }
+
+        //server.close();
 
         /*
         for(Thread thread : threads)
