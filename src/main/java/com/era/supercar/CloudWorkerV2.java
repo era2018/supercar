@@ -52,15 +52,15 @@ class CloudWorker implements Runnable
                     props.put( "User", "ubdb" );
                     props.put( "Password", "123456" );
                     System.out.println("connecting");
-                    Connection connection = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
+                    Connection conn = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
                     System.out.println("connected");
                     String queryString = "INSERT INTO sensordata (timestamp, percent, absolute) values (0, 0, 0)";
-                    PreparedStatement pstatement = connection.prepareStatement(queryString);
+                    PreparedStatement pstatement = conn.prepareStatement(queryString);
                     pstatement.executeUpdate();
            
                     System.out.println("Insert executed.");
                     pstatement.close();
-                    connection.close();
+                    conn.close();
     
                 }
 			} catch (MalformedURLException e) {
