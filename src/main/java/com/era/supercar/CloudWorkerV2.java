@@ -54,12 +54,24 @@ class CloudWorker implements Runnable
                     System.out.println("connecting");
                     Connection conn = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
                     System.out.println("connected");
-                    String queryString = "INSERT INTO sensordata (timestamp, percent, absolute) values (0, 0, 0)";
+                    /*String queryString = "INSERT INTO sensordata (timestamp, percent, absolute) values (0, 0, 0)";
                     PreparedStatement pstatement = conn.prepareStatement(queryString);
                     pstatement.executeUpdate();
            
                     System.out.println("Insert executed.");
-                    pstatement.close();
+                    pstatement.close();*/
+                    String queryString = "SELECT * FROM sensordata";
+            PreparedStatement pstatement = connection.prepareStatement(queryString);
+            ResultSet rs = pstatement.executeQuery();
+           
+            int numResults = 0;
+            while(rs.next()) {
+               numResults += 1;
+               System.out.println("" +  rs.getString("id"));
+            }
+            
+            rs.close();
+            pstatement.close();
                     conn.close();
     
                 }
