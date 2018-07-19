@@ -3,7 +3,6 @@ package com.era.supercar;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class App 
 {
@@ -11,10 +10,8 @@ public class App
     {
         System.out.println( "Hello World!" );
 
-        Thread cloud = new Thread(new CloudWorker());
+        Thread cloud = new Thread(new ServerWorker());
         cloud.run();
-
-        ArrayList<Thread> threads = new ArrayList<Thread>();
 
         ServerSocket server = new ServerSocket(330);
 
@@ -23,7 +20,7 @@ public class App
             Socket client = server.accept();
 
             Thread clientWorker = new Thread( new ClientWorker(client) );
-            threads.add(clientWorker);
+
             clientWorker.run();
         }
 
