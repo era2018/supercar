@@ -23,14 +23,5 @@ public class App
 
             clientWorker.run();
         }
-
-        //server.close();
-
-        /*
-        for(Thread thread : threads)
-        {
-
-        }
-        */
     }
 }

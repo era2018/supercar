@@ -1,5 +1,8 @@
 package com.era.supercar;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,13 +17,11 @@ class ServerWorker implements Runnable
 {
 	public void run() {
 
+		DummyDataStream data = new DummyDataStream();
         //CloudBit cloud = new CloudBit();
-        //DummyDataStream data = new DummyDataStream();
-        //DummyStream data = new DummyStream();
 
-        //BufferedReader dataStream = new BufferedReader(
-        //    new InputStreamReader(data.getInputStream()));
-        DummyStream dataStream = new DummyStream();
+        BufferedReader dataStream = new BufferedReader(
+            new InputStreamReader(data.getInputStream()));
 
         String jsonData;
 
@@ -28,14 +29,13 @@ class ServerWorker implements Runnable
 			while((jsonData=dataStream.readLine()) != null)
 			{
 			    // Parse JSON
-			    //jsonData = jsonData.substring(5);
 			    JsonObject jsonObject = new JsonParser().parse(jsonData).getAsJsonObject();
 
 			    String percent = jsonObject.get("percent").getAsString();
 
 			    System.out.println(jsonData);
-			    System.out.println(percent);
-
+				System.out.println(percent);
+				
 				// Send data to database
 				Properties props = new Properties();
 				props.put( "User", "ubdb" );
@@ -55,6 +55,9 @@ class ServerWorker implements Runnable
             }
             System.out.println("ended");
 		} catch (JsonSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
