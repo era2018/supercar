@@ -12,7 +12,7 @@ class ClientWorker implements Runnable
     }
 
 	public void run() {
-		
+		// Update client, or, wait for request from client, or whatever
 	}
 
 }
