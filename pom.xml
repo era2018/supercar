@@ -15,6 +15,13 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.sap.anywhere</groupId>
+      <artifactId>SAPAnywhere</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/jconn4.jar</systemPath>
+    </dependency>
+    <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
     <version>2.3.1</version>
