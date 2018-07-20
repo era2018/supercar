@@ -6,8 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class GreetingController
+class Controller
 {
+    @GetMapping("/events")
+    public Event getEvents()
+    {
+        Event event = new Event(35, 0);
+        return event;
+    }
+
     @GetMapping("/greeting")
     public String greeting()
     {
