@@ -46,15 +46,14 @@ class ServerWorker implements Runnable
 				System.out.println("connecting");
 				Connection con = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
 				System.out.println("connected");
-				String queryString = "INSERT INTO sensordata (timestamp, percent, absolute) values (0, 0, 0)";
+				String queryString = "INSERT INTO sensordata (ID, timestamp, percent, absolute) "
+				+ "values (20, 20, 20, 20)";
 				PreparedStatement pstatement = ((Connection) con).prepareStatement(queryString);
 				pstatement.executeUpdate();
 		
 				System.out.println("Insert executed.");
 				pstatement.close();
 				con.close();
-    
-
             }
             System.out.println("ended");
 		} catch (JsonSyntaxException e) {
