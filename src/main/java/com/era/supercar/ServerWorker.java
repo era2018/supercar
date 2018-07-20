@@ -17,16 +17,19 @@ class ServerWorker implements Runnable
 {
 	public void run() {
 
-		DummyDataStream data = new DummyDataStream();
-        //CloudBit cloud = new CloudBit();
+		/*
+		CloudBit data = new CloudBit();
 
         BufferedReader dataStream = new BufferedReader(
-            new InputStreamReader(data.getInputStream()));
+			new InputStreamReader(data.getInputStream()));
+		*/
 
         String jsonData;
 
+		DummyStream data = new DummyStream();
+
         try {
-			while((jsonData=dataStream.readLine()) != null)
+			while((jsonData=data.readLine()) != null)
 			{
 			    // Parse JSON
 			    JsonObject jsonObject = new JsonParser().parse(jsonData).getAsJsonObject();
@@ -55,9 +58,6 @@ class ServerWorker implements Runnable
             }
             System.out.println("ended");
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {

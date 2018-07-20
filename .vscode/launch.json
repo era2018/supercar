@@ -17,6 +17,17 @@
         },
         {
             "type": "java",
+            "name": "Debug (Launch)-DemoApplication<supercar>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.era.supercar.DemoApplication",
+            "projectName": "supercar",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "Debug (Attach)",
             "request": "attach",
             "hostName": "localhost",
