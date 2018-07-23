@@ -18,17 +18,14 @@ class ServerWorker implements Runnable
 
 		CloudBit data = new CloudBit();
 
-        BufferedReader dataStream = new BufferedReader(
-			new InputStreamReader(data.getInputStream()));
-
         String jsonData;
 
 		//DummyStream data = new DummyStream();
 
-		//try(DBConnection connection = new DBConnection())
+		try(DBConnection connection = new DBConnection())
 		{
 			try {
-				while((jsonData=dataStream.readLine()) != null)
+				while((jsonData=data.readLine()) != null)
 				{
 					System.out.println(jsonData);
 
@@ -42,7 +39,7 @@ class ServerWorker implements Runnable
 					value = (value + 43) % 170;
 
 					long timestamp = jsonObject.get("timestamp").getAsLong();
-					String iso = DateTimeFormatter.ofPattern("yyyyMMddHHmmssnX")
+					String iso = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
 					.withZone(ZoneOffset.UTC)
 					.format(Instant.ofEpochMilli(timestamp));
 
@@ -50,7 +47,7 @@ class ServerWorker implements Runnable
 
 					System.out.println(iso);
 					
-					//connection.insert(value, id, timestamp);
+					connection.insert(value, id, iso);
 				}
 			} catch (JsonSyntaxException e) {
 				// TODO Auto-generated catch block
@@ -60,10 +57,10 @@ class ServerWorker implements Runnable
 				e.printStackTrace();
 			}
 		}
-		//catch(SQLException e)
+		catch(SQLException e)
 		{
-		//	e.printStackTrace();
-		//	System.exit(-1);
+			e.printStackTrace();
+			System.exit(-1);
 		}
     }
 }

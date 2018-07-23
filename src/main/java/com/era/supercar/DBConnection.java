@@ -18,15 +18,17 @@ class DBConnection implements AutoCloseable
         props.put("User", "ubdb");
         props.put("Password", "123456");
         this.connection = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
-        String queryString = "INSERT INTO EventLog (logID, eventID, carID, logTime) values (?, ?, ?)";
+        String queryString = "INSERT INTO EventLog (eventID, carID, logTime) values (?, ?, ?)";
         this.preparedStatement = this.connection.prepareStatement(queryString);
+
+        System.out.println("DBConnection: connected");
     }
 
-    public void insert(int value, String id, long timestamp) throws SQLException
+    public void insert(int value, String id, String timestamp) throws SQLException //long timestamp) throws SQLException
     {
         this.preparedStatement.setInt(1, value);
         this.preparedStatement.setString(2, id);
-        this.preparedStatement.setLong(3,   timestamp);
+        this.preparedStatement.setString(3, timestamp);//.setLong(3, timestamp);
         this.preparedStatement.executeUpdate();
     }
 
