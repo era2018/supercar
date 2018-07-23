@@ -32,10 +32,10 @@ class CloudBit
     {
         // Connect to cloud server
         String url = "https://api-http.littlebitscloud.cc/v2/devices/243c201f7957/input";
-        boolean connected = false;
         int timeout = 0;
 
-        while(connected == false && timeout < 5)
+        // Sometimes fails for no reason. Try a few times before giving up.
+        while(timeout < 5)
         {
             try {
                 URL obj = new URL(url);
@@ -46,18 +46,12 @@ class CloudBit
                 connection.setDoOutput(true);
     
                 this.in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                connected = true;
                 return;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("CloudBit: connection attempt failed");
                 timeout += 1;
             }
         }
 
-        System.out.println("CloudBit: timeout");
-        System.exit(-1);
-
+        throw new RuntimeException("Couldn't connect to CloudBit");
     }    
 }

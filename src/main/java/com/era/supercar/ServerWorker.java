@@ -27,7 +27,7 @@ class ServerWorker implements Runnable
 			try {
 				while((jsonData=data.readLine()) != null)
 				{
-					System.out.println(jsonData);
+					//System.out.println(jsonData);
 
 				    // Parse JSON
 				    JsonObject jsonObject = new JsonParser().parse(jsonData).getAsJsonObject();
@@ -36,7 +36,9 @@ class ServerWorker implements Runnable
 					
 					// Codes are in 170 wide windows
 					// Signal isn't clear, but hopfully won't varry by more than 43?
-					value = (value + 43) % 170;
+					value = (value + 43) / 170;
+
+					if( value > 3) System.out.print(value + ", ");
 
 					long timestamp = jsonObject.get("timestamp").getAsLong();
 					String iso = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
@@ -44,8 +46,6 @@ class ServerWorker implements Runnable
 					.format(Instant.ofEpochMilli(timestamp));
 
 					String id = jsonObject.getAsJsonObject("from").getAsJsonObject("device").get("id").getAsString();
-
-					System.out.println(iso);
 					
 					connection.insert(value, id, iso);
 				}

@@ -20,8 +20,6 @@ class DBConnection implements AutoCloseable
         this.connection = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
         String queryString = "INSERT INTO EventLog (eventID, carID, logTime) values (?, ?, ?)";
         this.preparedStatement = this.connection.prepareStatement(queryString);
-
-        System.out.println("DBConnection: connected");
     }
 
     public void insert(int value, String id, String timestamp) throws SQLException //long timestamp) throws SQLException
