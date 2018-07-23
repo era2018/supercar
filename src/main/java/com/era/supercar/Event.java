@@ -2,29 +2,18 @@ package com.era.supercar;
 
 class Event
 {
-    private int carID;
-    private int eventCode;
-    private long timestamp;
+ 
+    private Long event;
 
-    public Event(int carID, int eventCode, long timestamp)
+    public Event(long eventId)
     {
-        this.carID = carID;
-        this.eventCode = eventCode;
-        this.timestamp = timestamp;
+       this.event = eventId;
     }
 
-    public int getEventCode()
+    public Long getEvent()
     {
-        return this.eventCode;
+        return this.event;
     }
 
-    public long getTimestamp()
-    {
-        return this.timestamp;
-    }
 
-    public int getCarID()
-    {
-        return this.carID;
-    }
 }
