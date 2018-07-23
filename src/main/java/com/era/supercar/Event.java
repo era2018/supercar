@@ -2,11 +2,11 @@ package com.era.supercar;
 
 class Event
 {
-    private int carID;
     private int eventCode;
-    private long timestamp;
+    private String carID;
+    private String timestamp;
 
-    public Event(int carID, int eventCode, long timestamp)
+    public Event(int eventCode, String carID, String timestamp)
     {
         this.carID = carID;
         this.eventCode = eventCode;
@@ -18,12 +18,12 @@ class Event
         return this.eventCode;
     }
 
-    public long getTimestamp()
+    public String getTimestamp()
     {
         return this.timestamp;
     }
 
-    public int getCarID()
+    public String getCarID()
     {
         return this.carID;
     }
