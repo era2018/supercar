@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
+// Probably not thread safe. Each thread should have their own connection.
 class DBConnection implements AutoCloseable
 {
     private final Connection connection;
@@ -25,7 +26,7 @@ class DBConnection implements AutoCloseable
     {
         this.preparedStatement.setInt(1, value);
         this.preparedStatement.setString(2, id);
-        this.preparedStatement.setLong(3, timestamp);
+        this.preparedStatement.setLong(3,   timestamp);
         this.preparedStatement.executeUpdate();
     }
 
