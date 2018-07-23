@@ -1,13 +1,40 @@
 package com.era.supercar;
 
-import java.io.ByteArrayInputStream;
+import com.google.gson.JsonObject;
 
 class DummyStream
 {
-  private ByteArrayInputStream is;
+  private long timestamp;
+  private int absolute;
+
+  private static final int ABSOLUTE_MAX = 1023;
+
+  public DummyStream()
+  {
+    this.timestamp = 0;
+    this.absolute = 0;
+  }
 
   public String readLine()
   {
-    return "{\"type\":\"input\",\"timestamp\":1531506761624,\"percent\":35,\"absolute\":360,\"name\":\"amplitude\",\"payload\":{\"percent\":35,\"absolute\":360},\"from\":{\"device\":{\"id\":\"243c201f7957\",\"mac\":\"243c201f7957\"}}}\n";
+    JsonObject dummy = new JsonObject();
+
+    dummy.addProperty("timestamp", this.timestamp);
+    dummy.addProperty("absolute", this.absolute);
+    dummy.addProperty("percent", this.absolute/ABSOLUTE_MAX);
+
+    JsonObject from = new JsonObject();
+    JsonObject device = new JsonObject();
+
+    device.addProperty("id", "243c201f7957");
+
+    from.add("device", device);
+
+    dummy.add("from", from);
+
+    this.timestamp++;
+    this.absolute++;
+    
+    return dummy.toString();
   }
 }
