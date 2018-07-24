@@ -26,7 +26,7 @@ class DBConnection implements AutoCloseable
     {
         this.preparedStatement.setInt(1, value);
         this.preparedStatement.setString(2, id);
-        this.preparedStatement.setString(3, timestamp);//.setLong(3, timestamp);
+        this.preparedStatement.setString(3, timestamp);
         this.preparedStatement.executeUpdate();
     }
 

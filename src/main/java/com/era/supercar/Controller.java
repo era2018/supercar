@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,27 +36,23 @@ class Controller
         }
 	}
 
-    @GetMapping("/events")
-    public List<Event> getEvents()
-    {
-		ArrayList<Event> events = new ArrayList<Event>();
-
-        try {
-			String queryString = "select * from EventLog";
+	@CrossOrigin
+	@GetMapping("/event")
+	public Event getEvent()
+	{
+		try {
+			String queryString = "SELECT TOP 1 * from EventLog ORDER BY logTime DESC";
 			ResultSet rs = pstatement.executeQuery(queryString);
-			
-			while (rs.next()) {
-                Event ev = new Event(rs.getInt("eventID"), rs.getString("carID"), rs.getString("logTime"));
-			    events.add(ev);
-			}
-            rs.close();
-            
-            return events;
+			rs.next();
+			//System.out.println(rs.getInt("eventID") + " " + rs.getString("logTime"));
+			Event ev = new Event(rs.getInt("eventID"), rs.getString("carID"), rs.getString("logTime"));
+			rs.close();
+			//Event ev = new Event(1, "2", "3");
+			return ev;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-        }
-        
-        return events;
-    }
+		}
+		return null;
+	}
 }

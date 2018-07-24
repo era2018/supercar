@@ -36,7 +36,6 @@ class ServerWorker implements Runnable
 					int eventCode;
 					
 					// Codes are in 200 wide windows
-					// Signal isn't clear, but hopfully won't varry by more than 43?
 					if( value <= 5 )
 					{
 						eventCode = 0;
@@ -45,7 +44,7 @@ class ServerWorker implements Runnable
 					{
 						eventCode = ((value - 5)/200)+1;
 					}
-
+					
 					if( eventCode > 5) eventCode = 5;
 
 					System.out.print(eventCode + ", ");
@@ -70,7 +69,7 @@ class ServerWorker implements Runnable
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			System.exit(-1);
+			//System.exit(-1);
 		}
     }
 }
