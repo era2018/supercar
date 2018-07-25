@@ -2,6 +2,7 @@ package com.era.supercar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ class Controller
 
     private PreparedStatement preparedStatement;
 	private Statement pstatement;
+	private Connection connection;
 	
 	public Controller()
 	{
@@ -26,11 +28,10 @@ class Controller
         Properties props = new Properties();
         props.put("User", "ubdb");
         props.put("Password", "123456");
-        Connection con = null;
 
         try {
-            con = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
-			this.pstatement = con.createStatement();
+            this.connection = DriverManager.getConnection("jdbc:sybase:Tds:10.171.1.252:2638/ubdatabase", props);
+			this.pstatement = this.connection.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,12 +67,13 @@ class Controller
 		return null;
 	}
 
+	/*
 	@CrossOrigin
-	@PostMapping(path = "/ride")
+	@PostMapping(path = "/rides")
 	public ArrayList<RideRequest> getRides()
 	{
 	    ArrayList<RideRequest> rides = new ArrayList<RideRequest>();
-		System.out.println(ride.getName());
+		//System.out.println(ride.getName());
 		try {
 			String queryString = "SELECT * from RideSharing";
 			ResultSet rs = pstatement.executeQuery(queryString);
@@ -90,23 +92,25 @@ class Controller
 		}
 		return rides;
 	}
+	*/
 	
 	@CrossOrigin
-	@PostMapping(path = "/create-ride")
+	@PostMapping(path = "/ride")
 	public String ride(RideRequest ride)
 	{
-		System.out.println(ride.getName());
+		//System.out.println(ride.getName());
 		try {
-			String queryString = "INSERT INTO RideSharing (startTime, startState, startCity, name, endState, endCity, ageRange) values (?, ?, ?, ?, ?, ?, ?)";
+			//String queryString = "INSERT INTO RideSharing (startTime, startState, startCity, name, endState, endCity, ageRange) values (?, ?, ?, ?, ?, ?, ?)";
+			String queryString = "INSERT INTO RideSharing (startCity, name, endCity, startTime, ageRange, startState, endState) values (?, ?, ?, ?, ?, ?, ?)";
 			this.preparedStatement = this.connection.prepareStatement(queryString);
 			
-			this.preparedStatement.setString(1, ride.getDate());
-            this.preparedStatement.setString(2, ride.getState());
-            this.preparedStatement.setString(3, ride.getCity());
-            this.preparedStatement.setString(4, ride.getName());
-            this.preparedStatement.setString(5, ride.getState2());
-        	this.preparedStatement.setString(6, ride.getCity2());
-        	this.preparedStatement.setString(7, ride.getRange());
+			this.preparedStatement.setString(1, ride.getCity());
+            this.preparedStatement.setString(2, ride.getName());
+            this.preparedStatement.setString(3, ride.getCity2());
+            this.preparedStatement.setString(4, ride.getDate());
+            this.preparedStatement.setString(5, ride.getRange());
+        	this.preparedStatement.setString(6, ride.getState());
+        	this.preparedStatement.setString(7, ride.getState2());
         	this.preparedStatement.executeUpdate();
 			//System.out.println(rs.getInt("eventID") + " " + rs.getString("logTime"));
 			//Event ev = new Event(rs.getInt("eventID"), rs.getString("carID"), rs.getString("logTime"));

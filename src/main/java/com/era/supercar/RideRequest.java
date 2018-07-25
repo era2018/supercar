@@ -17,6 +17,7 @@ class RideRequest
     private String time;
 
 
+    /*
     public RideRequest(String name, String city, String city2,
     String state, String state2, String date, String range)
     {
@@ -54,6 +55,7 @@ class RideRequest
         this.range = range;
         this.time = time;
     }
+    */
 
     public String getName()
     {
