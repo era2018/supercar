@@ -5,16 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,7 +17,7 @@ class Controller
 {
 
 	private Statement pstatement;
-
+	
 	public Controller()
 	{
 		System.out.println("Controller construction");
@@ -39,6 +34,15 @@ class Controller
 			e.printStackTrace();
         }
 	}
+	
+	@CrossOrigin
+	@PostMapping(path = "/login")
+	public String login(Credentials creds)
+	{
+		System.out.println(creds.getEmail() + " " + creds.getPass());
+		return "done";
+	}
+
 
 	@CrossOrigin
 	@GetMapping("/event")
@@ -60,10 +64,11 @@ class Controller
 		return null;
 	}
 
-	@RequestMapping(value="/send",
-	method = RequestMethod.POST, consumes = {"text/plain"})
-	public void send(@RequestBody String text)
+	@CrossOrigin
+	@PostMapping(path = "/ride")
+	public String ride(RideRequest ride)
 	{
-		System.out.println("TEXT" + text + " TEXT");
+		System.out.println(ride.getName());
+		return "done";
 	}
 }
