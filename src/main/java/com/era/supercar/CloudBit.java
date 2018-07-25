@@ -47,6 +47,6 @@ class CloudBit
             }
         }
 
-        throw new RuntimeException("Couldn't connect to CloudBit");
+        //throw new RuntimeException("Couldn't connect to CloudBit");
     }    
 }
