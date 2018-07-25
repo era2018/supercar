@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 class Controller
 {
 
+    private PreparedStatement preparedStatement;
 	private Statement pstatement;
 	
 	public Controller()
@@ -66,9 +68,55 @@ class Controller
 
 	@CrossOrigin
 	@PostMapping(path = "/ride")
+	public ArrayList<RideRequest> getRides()
+	{
+	    ArrayList<RideRequest> rides = new ArrayList<RideRequest>();
+		System.out.println(ride.getName());
+		try {
+			String queryString = "SELECT * from RideSharing";
+			ResultSet rs = pstatement.executeQuery(queryString);
+			while(rs.next()) {
+               RideRequest ride = new RideRequest(rs.getString("name"), rs.getString("startCity"), rs.getString("endCity"), rs.getString("startState"), rs.getString("endState"), rs.getString("startTime"), rs.getString("ageRange"));
+               rides.add(ride);
+               //System.out.println("" +  rs.getInt("timestamp")+", "+rs.getInt("percent")+", "+ rs.getInt("absolute"));
+            }
+			//System.out.println(rs.getInt("eventID") + " " + rs.getString("logTime"));
+			rs.close();
+			//Event ev = new Event(1, "2", "3");
+			return rides;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rides;
+	}
+	
+	@CrossOrigin
+	@PostMapping(path = "/create-ride")
 	public String ride(RideRequest ride)
 	{
 		System.out.println(ride.getName());
+		try {
+			String queryString = "INSERT INTO RideSharing (startTime, startState, startCity, name, endState, endCity, ageRange) values (?, ?, ?, ?, ?, ?, ?)";
+			this.preparedStatement = this.connection.prepareStatement(queryString);
+			
+			this.preparedStatement.setString(1, ride.getDate());
+            this.preparedStatement.setString(2, ride.getState());
+            this.preparedStatement.setString(3, ride.getCity());
+            this.preparedStatement.setString(4, ride.getName());
+            this.preparedStatement.setString(5, ride.getState2());
+        	this.preparedStatement.setString(6, ride.getCity2());
+        	this.preparedStatement.setString(7, ride.getRange());
+        	this.preparedStatement.executeUpdate();
+			//System.out.println(rs.getInt("eventID") + " " + rs.getString("logTime"));
+			//Event ev = new Event(rs.getInt("eventID"), rs.getString("carID"), rs.getString("logTime"));
+			//rs.close();
+			//Event ev = new Event(1, "2", "3");
+			return "done";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "done";
 	}
 }

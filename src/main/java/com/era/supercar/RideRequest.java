@@ -16,6 +16,25 @@ class RideRequest
     private String range;
     private String time;
 
+
+    public RideRequest(String name, String city, String city2,
+    String state, String state2, String date, String range)
+    {
+        this.name = name;
+        this.address = "";
+        this.address2 = "";
+        this.city = city;
+        this.city2 = city2;
+        this.state = state;
+        this.state2 = state2;
+        this.zip = "";
+        this.zip2 = "";
+        this.age = "";
+        this.date = date;
+        this.range = range;
+        this.time = "";
+    }
+    
     public RideRequest(String name, String address, 
     String address2, String city, String city2,
     String state, String state2, String zip, String zip2,
