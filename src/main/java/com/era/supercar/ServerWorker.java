@@ -25,8 +25,6 @@ class ServerWorker implements Runnable
 			try {
 				while((jsonData=data.readLine()) != null)
 				{
-					//System.out.println(jsonData);
-
 				    // Parse JSON
 				    JsonObject jsonObject = new JsonParser().parse(jsonData).getAsJsonObject();
 
@@ -44,8 +42,6 @@ class ServerWorker implements Runnable
 					}
 					
 					if( eventCode > 5) eventCode = 5;
-
-					System.out.print(eventCode + ", ");
 
 					long timestamp = jsonObject.get("timestamp").getAsLong();
 					String iso = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")

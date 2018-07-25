@@ -104,6 +104,8 @@ class Controller
 			String queryString = "INSERT INTO RideSharing (startCity, name, endCity, startTime, ageRange, startState, endState) values (?, ?, ?, ?, ?, ?, ?)";
 			this.preparedStatement = this.connection.prepareStatement(queryString);
 			
+			System.out.println(ride);
+
 			this.preparedStatement.setString(1, ride.getCity());
             this.preparedStatement.setString(2, ride.getName());
             this.preparedStatement.setString(3, ride.getCity2());
