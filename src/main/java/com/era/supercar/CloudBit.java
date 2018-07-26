@@ -9,7 +9,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 class CloudBit
 {
-
     private BufferedReader in;
 
     public String readLine() throws IOException
@@ -23,10 +22,10 @@ class CloudBit
         return line.substring(5);
     }
 
-    CloudBit()
+    CloudBit(String id, String authorization)
     {
         // Connect to cloud server
-        String url = "https://api-http.littlebitscloud.cc/v2/devices/243c201f7957/input";
+        String url = String.format("https://api-http.littlebitscloud.cc/v2/devices/%s/input", id);
         int timeout = 0;
 
         // Sometimes fails for no reason. Try a few times before giving up.
@@ -37,7 +36,7 @@ class CloudBit
                 HttpsURLConnection connection = (HttpsURLConnection) obj.openConnection();
     
                 connection.setRequestMethod("POST");
-                connection.setRequestProperty("Authorization", "Bearer 9fd40b2075c1ec9ae77b254cad78377a54cef4401cd5faceab60de802ec7eee7");
+                connection.setRequestProperty("Authorization", String.format("Bearer %s", authorization));
                 connection.setDoOutput(true);
     
                 this.in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -47,6 +46,7 @@ class CloudBit
             }
         }
 
-        //throw new RuntimeException("Couldn't connect to CloudBit");
+        try{throw new Exception(String.format("Couldn't connect to CloudBit %s", id));}
+        catch(Exception e) {e.printStackTrace();}
     }    
 }

@@ -13,9 +13,17 @@ public class App {
 
         SpringApplication.run(App.class, args);
         
-		System.out.println( "Hello World!" );
+        System.out.println( "Hello World!" );
+        
+        try
+        {
+            DBConnection connection = new DBConnection();
+            Thread cloud = new Thread(new ServerWorker(connection));
+            cloud.start();
 
-        Thread cloud = new Thread(new ServerWorker());
-        cloud.run();
+            new Thread(new ServerWorker2(connection)).start();
+        }
+        catch(Exception e) {e.printStackTrace();}
+
 	}
 }
