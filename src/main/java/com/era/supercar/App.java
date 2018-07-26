@@ -17,18 +17,5 @@ public class App {
 
         Thread cloud = new Thread(new ServerWorker());
         cloud.run();
-
-		/*
-        ServerSocket server = new ServerSocket(330);
-
-        while(true)
-        {
-            Socket client = server.accept();
-
-            Thread clientWorker = new Thread( new ClientWorker(client) );
-
-            clientWorker.run();
-		}
-		*/
 	}
 }
