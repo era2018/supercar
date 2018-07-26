@@ -31,12 +31,21 @@ class ServerWorker implements Runnable
 				    JsonObject jsonObject = new JsonParser().parse(jsonData).getAsJsonObject();
 
 					int value = jsonObject.get("absolute").getAsInt();
+					int eventCode;
 					
-					// Codes are in 170 wide windows
-					// Signal isn't clear, but hopfully won't varry by more than 43?
-					value = (value + 43) / 170;
+					// Codes are in 200 wide windows
+					if( value <= 5 )
+					{
+						eventCode = 0;
+					}
+					else
+					{
+						eventCode = ((value - 5)/200)+1;
+					}
+					
+					if( eventCode > 5) eventCode = 5;
 
-					if( value > 3) System.out.print(value + ", ");
+					System.out.print(eventCode + ", ");
 
 					long timestamp = jsonObject.get("timestamp").getAsLong();
 					String iso = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
@@ -45,7 +54,7 @@ class ServerWorker implements Runnable
 
 					String id = jsonObject.getAsJsonObject("from").getAsJsonObject("device").get("id").getAsString();
 					
-					connection.insert(value, id, iso);
+					connection.insert(eventCode, id, iso);
 				}
 			} catch (JsonSyntaxException e) {
 				// TODO Auto-generated catch block
@@ -58,7 +67,7 @@ class ServerWorker implements Runnable
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			System.exit(-1);
+			//System.exit(-1);
 		}
     }
 }
