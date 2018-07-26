@@ -21,7 +21,7 @@ public class App {
             Thread cloud = new Thread(new ServerWorker(connection));
             cloud.start();
 
-            new Thread(new ServerWorker2(connection)).start();
+            //new Thread(new ServerWorker2(connection)).start();
         }
         catch(Exception e) {e.printStackTrace();}
 
